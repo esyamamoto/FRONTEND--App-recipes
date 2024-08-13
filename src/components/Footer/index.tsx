@@ -21,7 +21,7 @@ export default function Footer({ footerOk = false }: FooterType) {
 
   function buttonDrinks() {
     return (
-      <button onClick={ handleDrinkClick }>
+      <button onClick={ handleDrinkClick } className="button iconButton">
         <img src={ drinkIcon } alt="Drinks" data-testid="drinks-bottom-btn" />
       </button>
     );
@@ -29,8 +29,8 @@ export default function Footer({ footerOk = false }: FooterType) {
 
   function buttonMeals() {
     return (
-      <button onClick={ handleMealClick }>
-        <img src={ mealIcon } alt="Meals" data-testid="meals-bottom-btn" />
+      <button onClick={ handleMealClick } className="button iconButton">
+        <img src={ mealIcon } alt="Meals" data-testid="meals-bottom-btn" className="iconFooter"/>
       </button>
     );
   }

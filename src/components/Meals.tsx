@@ -5,6 +5,7 @@ import Header from './Header';
 import FoodContext from '../Context/FoodContext';
 import { MealsAll, MealsCategoryApi } from '../ApiAll';
 import { MealsCategory, DetailsDrink } from '../type';
+import '../AllCss/Meals.css';
 
 export default function Meals() {
   const { stateGlobal, setStateGlobal, setIdDetails } = useContext(FoodContext);
@@ -52,15 +53,16 @@ export default function Meals() {
 
   const mealsSlice = stateGlobal ? stateGlobal.slice(0, 12) : [];
   return (
-    <>
+    <section className="body-meals">
       <Header title="Meals" searchOk profileOk />
       {' '}
-      <div>
+      <div className="button-container-meals">
         <button data-testid="All-category-filter" onClick={ handleAll }>
           All
         </button>
         {category.meals && category.meals.slice(0, 5).map((item) => (
           <button
+            className="button-category-meals"
             type="button"
             key={ item.strCategory }
             data-testid={ `${item.strCategory}-category-filter` }
@@ -76,11 +78,13 @@ export default function Meals() {
           onClick={ () => cardNavigate(meal) }
           key={ meal.idMeal }
           data-testid={ `${index}-recipe-card` }
+          className="card-title-meals"
         >
           <h2 data-testid={ `${index}-card-name` }>
             { `${meal.strMeal}` }
           </h2>
           <img
+            className="card-image-meals"
             src={ meal.strMealThumb }
             alt={ meal.strMeal }
             data-testid={ `${index}-card-img` }
@@ -88,12 +92,14 @@ export default function Meals() {
           />
         </button>
       )))}
-      {recommendation.map((food, index) => (
-        <div key={ index }>
-          <p>{food.strDrink}</p>
-        </div>
-      ))}
+      <section className="recommendation-meals">
+        {recommendation.map((food, index) => (
+          <div key={ index }>
+            <p>{food.strDrink}</p>
+          </div>
+        ))}
+      </section>
       <Footer footerOk />
-    </>
+    </section>
   );
 }

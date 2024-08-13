@@ -9,6 +9,7 @@ import { DetailsDrink, DetailsMeal } from '../type';
 import '../AllCss/Page.css';
 import { INITIAL_STATE_MEALS } from '../utils/inial-state';
 import renderRecomendations from '../utils/Recommendation';
+import '../AllCss/MealsInfo.css';
 
 export default function MealsInfo() {
   const [detailsMeal, setDetailsMeal] = useState<DetailsMeal[]>(INITIAL_STATE_MEALS);
@@ -122,17 +123,20 @@ export default function MealsInfo() {
 
   if (detailsMeal) {
     return (
-      <>
+      <section className="body-container-meals">
         <Header title="Meal" searchOk profileOk />
         <div key={ detailsMeal[0].idMeal }>
-          <div>
+          <div className="container-button">
             <button
+              className="favorite-button"
               onClick={ ShareRecipes }
               data-testid="share-btn"
             >
               <img
+                className="image-favorite"
                 src={ shareIcon }
                 alt=""
+                data-testid="share-btn"
               />
               Share
             </button>
@@ -140,23 +144,30 @@ export default function MealsInfo() {
               <p className={ copiedMsg }>{ copiedMsg }</p>)}
           </div>
           <button
+            className="favorite-button"
+            data-testid="favorite-btn"
             onClick={ FavoriteRecipe }
           >
             <img
+              className="image-favorite"
               src={ favorite ? blackHeartIcon : whiteHeartIcon }
               alt=""
               data-testid="favorite-btn"
             />
             Favorite
           </button>
-          <h1 data-testid="recipe-title">{detailsMeal[0].strMeal}</h1>
+
+        <div className="ingredients-container">
+          <h1 className="title" data-testid="recipe-title">{detailsMeal[0].strMeal}</h1>
           <img
+            className="recipe-photo"
             src={ detailsMeal[0].strMealThumb }
             alt={ detailsMeal[0].strMeal }
             data-testid="recipe-photo"
             width={ 350 }
           />
           <p data-testid="recipe-category">{detailsMeal[0].strCategory}</p>
+          <p className="title-container">Ingredients:</p>
           <div key={ detailsMeal[0].idMeal }>
             {
              ingredient.map((meals, cont) => (
@@ -170,14 +181,19 @@ export default function MealsInfo() {
                </div>
              ))
             }
-            <p data-testid="instructions">{`${detailsMeal[0].strInstructions}`}</p>
-            <iframe
-              data-testid="video"
-              title="video receita"
-              width="800"
-              height="443"
-              src={ detailsMeal[0].strYoutube.replace('watch?v=', 'embed/') }
-            />
+            <p className="title-container">Instructions:</p>
+            <div className="intructions-container">
+              <p data-testid="instructions">{`${detailsMeal[0].strInstructions}`}</p>
+                <iframe
+                  data-testid="video"
+                  title="video receita"
+                  width="800"
+                  height="443"
+                  src={ detailsMeal[0].strYoutube.replace('watch?v=', 'embed/') }
+                />
+            </div>
+
+            <p className="title-container">Recommendations:</p>
             <div className="recipies-list">
               {renderRecomendations(recommendation)}
             </div>
@@ -191,7 +207,8 @@ export default function MealsInfo() {
             </button>
           </div>
         </div>
-      </>
+        </div>
+      </section>
     );
   }
 }

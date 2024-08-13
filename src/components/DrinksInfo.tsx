@@ -9,6 +9,7 @@ import { DetailsDrink, DetailsMeal } from '../type';
 import '../AllCss/Page.css';
 import { INITIAL_STATE_DRINKS } from '../utils/inial-state';
 import renderRecomendationsMeals from '../utils/RecommendationMeals';
+import '../AllCss/DrinksInfo.css';
 
 export default function DrinksInfo() {
   const [detailsDrink, setDetailsDrink] = useState<DetailsDrink[]>(INITIAL_STATE_DRINKS);
@@ -124,15 +125,17 @@ export default function DrinksInfo() {
   }
 
   return (
-    <>
+    <section className="body-container">
       <Header title="Drinks" searchOk profileOk />
       <div key={ detailsDrink[0].idDrink }>
-        <div>
+        <div className="container-button">
           <button
+            className="favorite-button"
             onClick={ ShareRecipes }
             data-testid="share-btn"
           >
             <img
+              className="image-favorite"
               src={ shareIcon }
               alt=""
             />
@@ -142,22 +145,29 @@ export default function DrinksInfo() {
             <p className={ copiedMsg }>{ copiedMsg }</p>)}
         </div>
         <button
+          className="favorite-button"
+          data-testid="favorite-btn"
           onClick={ FavoriteRecipe }
         >
           <img
+            className="image-favorite"
             src={ favorite ? blackHeartIcon : whiteHeartIcon }
             alt=""
             data-testid="favorite-btn"
           />
           Favorite
         </button>
-        <h1 data-testid="recipe-title">{detailsDrink[0].strDrink}</h1>
+        <div className="ingredients-container">
+          <h1 className="title" data-testid="recipe-title">{detailsDrink[0].strDrink}</h1>
+        </div>
         <img
           src={ detailsDrink[0].strDrinkThumb }
           alt={ detailsDrink[0].strDrink }
           data-testid="recipe-photo"
+          className="recipe-photo"
         />
         <p data-testid="recipe-category">{detailsDrink[0].strAlcoholic}</p>
+        <p className="title-container">Ingredients:</p>
         <div key={ detailsDrink[0].idDrink }>
           {
              ingredient.map((drinks, cont) => (
@@ -171,11 +181,16 @@ export default function DrinksInfo() {
                </div>
              ))
             }
-          <p data-testid="instructions">{`${detailsDrink[0].strInstructions}`}</p>
-
-          <div className="recipies-list">
-            {renderRecomendationsMeals(recommendationMeals)}
-          </div>
+            
+            <p className="title-container">Instructions:</p>
+            <div className="intructions-container">
+              <p data-testid="instructions">{`${detailsDrink[0].strInstructions}`}</p>
+            </div>
+            
+            <p className="title-container">Recommendations:</p>
+            <div className="recipies-list">
+              {renderRecomendationsMeals(recommendationMeals)}
+            </div>
 
           <button
             data-testid="start-recipe-btn"
@@ -186,6 +201,6 @@ export default function DrinksInfo() {
           </button>
         </div>
       </div>
-    </>
+    </section>
   );
 }
